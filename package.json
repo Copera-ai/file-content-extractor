@@ -44,8 +44,7 @@
 		"test": "run-s test:compile test:integration",
 		"test:compile": "tsc --noEmit",
 		"test:quality": "xo source/ test/",
-		"test:integration": "NODE_OPTIONS='--loader=tsx' ava",
-		"postinstall": "tsc"
+		"test:integration": "NODE_OPTIONS='--loader=tsx' ava"
 	},
 	"dependencies": {
 		"fflate": "0.8.1",

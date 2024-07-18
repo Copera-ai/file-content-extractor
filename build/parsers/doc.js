@@ -1,0 +1,26 @@
+// source/parsers/docx.ts
+// The text extracter for DOCX files.
+import { convertToHtml as parseWordFile } from 'mammoth';
+export class DocExtractor {
+    constructor() {
+        /**
+         * The type(s) of input acceptable to this method.
+         */
+        this.mimes = [
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        ];
+        /**
+         * Extract text from a DOCX file if possible.
+         *
+         * @param payload The input and its type.
+         * @returns The text extracted from the input.
+         */
+        this.apply = async (input) => {
+            // Convert the DOCX to text and return the text.
+            const parsedDocx = await parseWordFile({
+                arrayBuffer: input.buffer,
+            });
+            return parsedDocx.value;
+        };
+    }
+}
