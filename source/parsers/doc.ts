@@ -1,8 +1,7 @@
 // source/parsers/docx.ts
 // The text extracter for DOCX files.
 
-import { type Buffer } from 'node:buffer'
-import { extractRawText as parseWordFile } from 'mammoth'
+import { convertToHtml as parseWordFile } from 'mammoth'
 
 import type { TextExtractionMethod } from '../lib.js'
 
@@ -20,9 +19,11 @@ export class DocExtractor implements TextExtractionMethod {
 	 * @param payload The input and its type.
 	 * @returns The text extracted from the input.
 	 */
-	apply = async (input: Buffer): Promise<string> => {
+	apply = async (input: Uint8Array): Promise<string> => {
 		// Convert the DOCX to text and return the text.
-		const parsedDocx = await parseWordFile({ buffer: input })
+		const parsedDocx = await parseWordFile({
+			arrayBuffer: input.buffer,
+		})
 		return parsedDocx.value
 	}
 }

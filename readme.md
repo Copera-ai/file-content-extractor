@@ -1,4 +1,4 @@
-# <div align="center"> office-text-extractor </div>
+# <div align="center"> file-content-extractor </div>
 
 <div align="center">
 
@@ -53,64 +53,58 @@ to use office-text-extractor in an Node project, install it using `npm`/`pnpm`/`
 the library currently cannot be used in the browser due to its usage of the `node:buffer`
 library. pull requests that can replace `node:buffer` with a different library are welcome!
 
-## usage
+## usage NodeJS
 
 an example of using the library to extract text is as follows:
 
 ```ts
-import { readFile } from 'node:fs/promises'
-import { getTextExtractor } from 'office-text-extractor'
+import { getTextExtractor } from 'file-content-extractor'
 
 // this function returns a new instance of the `TextExtractor` class, with the default
 // extraction methods (docx, pptx, xlsx, pdf) registered.
 const extractor = getTextExtractor()
 
 // extract text from a url, because that's a neat first example :p
-const url = 'https://raw.githubusercontent.com/gamemaker1/office-text-extractor/rewrite/test/fixtures/docs/pptx.pptx'
-const text = await extractor.extractText({ input: url, type: 'url' })
+const url = 'https://raw.githubusercontent.com/Copera-ai/file-content-extractor/main/test/fixtures/texts/txt.txt'
 
-// you can extract text from a file too, like so:
-const path = 'stuff/boring.pdf'
-const text = await extractor.extractText({ input: path, type: 'file' })
+// fetch file 
+const fileResponse = await fetch(url)
+const buffer = await fileResponse.arrayBuffer();
 
-// if you have a buffer with the file in it, you can pass that too:
-const buffer = await readFile(path)
-const text = await extractor.extractText({ input: buffer, type: 'buffer' })
+// convert content to a Uint8Array
+const int8Array = new Uint8Array(
+  fileBuffer.buffer,
+  fileBuffer.byteOffset,
+  fileBuffer.byteLength,
+)
+const text = await extractor.extractText({ input: int8Array, mime: 'text/plain' })
 
 console.log(text)
 ```
 
-the following is an example of how to create and use your own text extraction method:
+# usage Browser
+
+an example of using the library to extract text is as follows:
 
 ```ts
-import { type Buffer } from 'node:buffer'
-import { TextExtractor, type TextExtractionMethod } from 'office-text-extractor'
+import { getTextExtractor } from 'file-content-extractor';
 
-/**
- * Extracts text from images.
- */
-class ImageExtractor implements TextExtractionMethod {
-  /**
-   * The mime types of the file that the extractor accepts.
-   */
-  mimes = ['image/png', 'image/jpeg']
+const reader = new FileReader();
 
-  /**
-   * Extracts text from the image file passed by the user.
-   */
-  apply = async (input: Buffer): Promise<string> {
-    const text = await processImage(input)
-    return text
-  }
-}
+reader.onload = async (loadEvent) => {
+    if (!(loadEvent?.target?.result instanceof ArrayBuffer)) return
+  
+  const arrayBuffer = loadEvent.target.result;
+  const uint8Array = new Uint8Array(arrayBuffer);
+  
+  const text = await textExtractor.extractText({
+    input: uint8Array,
+    mime: file.type,
+  });
+  console.log(text)
+};
 
-// create a new extractor and register our extraction method
-const extractor = new TextExtractor()
-extractor.addMethod(new ImageExtractor())
-
-// then use it like you would normally
-const text = await extractor.extractText({ input: '...', type: '...' }
-console.log(text)
+reader.readAsArrayBuffer(file);
 ```
 
 ## license

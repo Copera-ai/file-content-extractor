@@ -1,7 +1,6 @@
 // source/parsers/pdf.ts
 // The text extracter for PDF files.
 
-import { type Buffer } from 'node:buffer'
 // @ts-expect-error There are no types for this package.
 import parsePdf from 'pdf-parse/lib/pdf-parse.js'
 
@@ -19,7 +18,7 @@ export class PdfExtractor implements TextExtractionMethod {
 	 * @param payload The input and its type.
 	 * @returns The text extracted from the input.
 	 */
-	apply = async (input: Buffer): Promise<string> => {
+	apply = async (input: Uint8Array): Promise<string> => {
 		// Convert the PDF to text and return the text.
 		const parsedPdf = (await parsePdf(input, {
 			pagerender: renderPage,

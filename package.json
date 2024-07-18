@@ -1,6 +1,6 @@
 {
-	"name": "office-text-extractor",
-	"version": "3.0.3",
+	"name": "file-content-extractor",
+	"version": "1.0.0",
 	"description": "Yet another library to extract text from MS Office and PDF files",
 	"keywords": [
 		"text-extraction",
@@ -15,16 +15,16 @@
 		"pptx",
 		"pdf"
 	],
-	"author": "Vedant K <https://github.com/gamemaker1>",
+	"author": "Copera.ai K <https://github.com/Copera-ai>",
 	"license": "ISC",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/gamemaker1/office-text-extractor.git"
+		"url": "git+https://github.com/Copera-ai/file-content-extractor.git"
 	},
 	"bugs": {
-		"url": "https://github.com/gamemaker1/office-text-extractor/issues"
+		"url": "https://github.com/Copera-ai/file-content-extractor/issues"
 	},
-	"homepage": "https://github.com/gamemaker1/office-text-extractor#readme",
+	"homepage": "https://github.com/Copera-ai/file-content-extractor#readme",
 	"exports": "./build/index.js",
 	"types": "./build/index.d.ts",
 	"files": [
@@ -44,14 +44,15 @@
 		"test": "run-s test:compile test:integration",
 		"test:compile": "tsc --noEmit",
 		"test:quality": "xo source/ test/",
-		"test:integration": "NODE_OPTIONS='--loader=tsx' ava"
+		"test:integration": "NODE_OPTIONS='--loader=tsx' ava",
+		"postinstall": "tsc"
 	},
 	"dependencies": {
 		"fflate": "0.8.1",
 		"file-type": "18.5.0",
 		"got": "13.0.0",
 		"js-yaml": "4.1.0",
-		"mammoth": "1.6.0",
+		"mammoth": "1.8.0",
 		"pdf-parse": "1.1.1",
 		"text-encoding": "0.7.0",
 		"xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz",
@@ -62,6 +63,7 @@
 		"@types/node": "20.8.3",
 		"@types/text-encoding": "0.0.37",
 		"@types/xml2js": "0.4.12",
+		"mime": "4.0.4",
 		"ava": "5.3.1",
 		"np": "8.0.4",
 		"npm-run-all": "4.1.5",

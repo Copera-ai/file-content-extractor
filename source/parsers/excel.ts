@@ -1,7 +1,6 @@
 // source/parsers/excel.ts
 // The text extracter for Excel files.
 
-import { type Buffer } from 'node:buffer'
 import Xlsx, { utils as sheetUtils } from 'xlsx'
 import { dump as convertToYaml } from 'js-yaml'
 
@@ -22,9 +21,9 @@ export class ExcelExtractor implements TextExtractionMethod {
 	 * @param payload The input and its type.
 	 * @returns The text extracted from the input.
 	 */
-	apply = async (input: Buffer): Promise<string> => {
+	apply = async (input: Uint8Array): Promise<string> => {
 		// Read the contents of the Excel file and convert them to JSON.
-		const workbook = parseExcelFile(input, { type: 'buffer' })
+		const workbook = parseExcelFile(input.buffer, { type: 'buffer' })
 
 		// Get the names of all the sheets, loop through the sheets and return
 		// nicely formatted text.
